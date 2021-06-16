@@ -1,0 +1,39 @@
+
+# Controls when the action will run. 
+#on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  #push:
+  #  branches: [ master ]
+  #pull_request:
+  #  branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  #workflow_dispatch:
+
+name: CI Daily-Winner
+
+on: push
+
+jobs:
+  test:
+    name: checkout and test
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout project
+        uses: actions/checkout@v1
+      - name: composer install
+        run: composer install
+      - name: run phpunit
+        run: php vendor/bin/phpunit
+      - name: run mutation tests
+        run: vendor/bin/infection --only-covered --min-msi=100
+      - name: run psalm
+        run: vendor/bin/psalm
+      - name: Mattermost Notification
+        uses: tferreira/matterfy@releases/v1
+        if: always()
+        with:
+          type: ${{ job.status }}
+          job_name: '*Daily-Winner Check*'
+          channel: 'football-betting'
+          url: ${{ secrets.MATTERMOST_WEBHOOK_URL }}

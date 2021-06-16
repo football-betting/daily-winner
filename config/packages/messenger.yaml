@@ -1,0 +1,10 @@
+framework:
+    messenger:
+        serializer:
+            default_serializer: App\Messenger\Transport\JsonSerializer
+        transports:
+            daily.winner.to.app: '%env(DAILY_WINNER)%'
+            calculation.to.win.day: "%env(CALCULATION_TO_WIN_DAY)%"
+        routing:
+            'App\Component\DailyWinnerList\Domain\DataTransferObject\DailyWinnerListDataProvider': daily.winner.to.app
+            'App\Component\CalculationList\Domain\DataTransferObject\CalculationListDataProvider': calculation.to.win.day

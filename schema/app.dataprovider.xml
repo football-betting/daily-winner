@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+
+<DataProviders
+        xmlns="xervice:dataprovider-01"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="xervice:dataprovider-01 ../vendor/xervice/data-provider/dataprovider.schema.xsd"
+>
+    <DataProvider name="Calculation">
+        <DataElement name="matchId" type="string" />
+        <DataElement name="user" type="string" />
+        <DataElement name="score" type="int"/>
+        <DataElement name="tipTeam1" type="int" allownull="true" />
+        <DataElement name="tipTeam2" type="int" allownull="true" />
+    </DataProvider>
+
+    <DataProvider name="CalculationList">
+        <DataElement name="event" type="string" />
+        <DataElement name="data" type="Calculation[]" singleton="Data"/>
+    </DataProvider>
+
+    <DataProvider name="DailyWinnerList">
+        <DataElement name="event" type="string" />
+        <DataElement name="data" type="DailyWinner[]" singleton="DailyWinner"/>
+    </DataProvider>
+
+    <DataProvider name="DailyWinner">
+        <DataElement name="users" type="User[]" singleton="User"/>
+        <DataElement name="points" type="int"/>
+        <DataElement name="matchDate" type="string"/>
+    </DataProvider>
+
+    <DataProvider name="User">
+        <DataElement name="username" type="string" />
+    </DataProvider>
+
+</DataProviders>
